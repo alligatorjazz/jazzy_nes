@@ -43,6 +43,12 @@ impl CPU {
         self.register_x = self.register_a;
         self.update_zero_and_negative_flags(self.register_x);
     }
+
+    fn inx(&mut self) {
+        self.register_x += 1;
+        self.update_zero_and_negative_flags(self.register_x);
+    }
+
     pub fn interpret(&mut self, program: Vec<u8>) {
         // reset program counter before looping
         self.program_counter = 0;
@@ -68,6 +74,7 @@ impl CPU {
                 // TAX
                 // - implied
                 0xAA => self.tax(),
+                0xE8 => self.inx(),
                 _ => todo!(),
             }
         }
